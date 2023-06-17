@@ -1,0 +1,4 @@
+C:\Users\Brandon\AppData\Local\Programs\Python\Python311\Lib\site-packages\customtkinter;customtkinter\
+
+pyinstaller --name "SofiaSync" --onedir --noconsole --add-data "C:\Users\Brandon\AppData\Local\Programs\Python\Python311\Lib\site-packages\customtkinter;customtkinter\" "client_main.py"
+pyinstaller --name "SofiaSync" --onedir --noconsole --add-data "C:/Users/Brandon/AppData/Local/Programs/Python/Python311/Lib/site-packages/customtkinter;customtkinter/" "client_main.py"

@@ -1,5 +1,0 @@
-src dir\\Holy Ten - Pfumo(MP3_320K).mp3
-src dir\\Ulrik Munther - Stay Awake.mp3
-src dir\\Wilderado - _Surefire_ (Original)(MP3_320K).mp3
-src dir\more files\Anson Seabra - Keep Your Head Up Princess (Official Music Video)(MP3_320K).mp3
-src dir\more files\Anson Seabra - Love Me (Official Lyric Video)(MP3_320K).mp3

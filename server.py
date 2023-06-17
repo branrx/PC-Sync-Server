@@ -352,7 +352,7 @@ class Server():
                 if status[0]==0 or status[1]==0:
                         #s.close()
                         print('[INFO] - Socket closed!')
-
+                #lkjd
                 break
         
 

@@ -15,17 +15,32 @@ import datetime
 import txt_to_list as ttl
 import server
 
-class Instagram():
+#   gui for the server socket responsible for
+#   setting the root directory and starting the server
+#   displays the ip and port the server is running on
+#   indicates if server is off, listening or running
+class SyncGui():
     def __init__(self, root, icons) -> None:
         self.root = root
         self.icons = icons
         self.selectedPath = ''
+
+        #   create the server object
         self.serverObj = server.Server()
 
+        #   initialise the gui elements
         self.initWidgets()
 
+    #   main window of the gui displays
+    #   text box showing the selected root directory path
+    #   load button, to load a path
+    #   set path, to assign the selected path as the root
+    #   server button, which starts the server
+    #   info text, shows the ip and port for the server
+    #   indicator, red server is off, yellow is listening
+    #   green the server is connected.
     def initWidgets(self):
-        #   set theme
+        #   set theme for the gui
         style = sk.Style("darkly")	#flatly, darkly
 
         #	DEFINE WINDOW - Title, Size, If size is changeable or not
@@ -70,19 +85,26 @@ class Instagram():
         self.inputVar.set(self.selectedPath)
         print(self.selectedPath)
 
-        #   foramt path from /../../ to \\..\\..\\
+        #   format path from /../../ to \\..\\..\\
+        #   I'm used to a certain delimiter in my paths so yeah
         self.selectedPath = self.selectedPath.replace('/', "\\\\")
 
         print(f'formatted path: {self.selectedPath}')
 
+    #   if a new directory path has been selected then this
+    #   function assigns it as the root directory for the app
     def setPath(self):
+        #   dont do anything if no path has been selected
         if self.selectedPath=='':
             return
         
+        #   no comment, I don't remember what the next part is about lmao
         dirAsList = self.selectedPath.split('\\\\')
         dirAsList[-1]=''
         path = ''
-        #   create abs path
+        #   create abs path, which is not part of the root directory
+        #   e.g is path is D:\\New Folder\\PC Sync\\
+        #   D:\\New Folder is the absolute path, -I think lol-
         for filepath in dirAsList:
             if filepath!='':
                 path += filepath
@@ -91,6 +113,11 @@ class Instagram():
         musicPath = self.selectedPath  #example    'D:\\PC Sync'
         absPath = path   #example    'D:\\'
 
+        #   where music path is the root directory of the app
+        #   and abspath is the path before the root
+        #   example D:\\New Folder\\PC Sync
+        #   our root folder is \\PC Sync
+        #   and abspath is D:\\New Folder
         print(musicPath)
         print(absPath)
 
@@ -99,8 +126,7 @@ class Instagram():
 
         self.progressLabel.config(text=f'root dir: {self.selectedPath[:30]}')
 
-        pass
-
+    #   creates a thread in which we initiate the server socket
     def startThread(self):
         try:
             if self.serverRunning:
@@ -110,22 +136,32 @@ class Instagram():
         self.serverRunning = True
         serverThread = threading.Thread(target=self.startServer) 
         serverThread.start()
+
+        #   joins the thread if server socket is closed
         if not self.serverRunning:
             serverThread.join()
 
-    
+    #   process that initiates the server
+    #   changes ui elements to show user current status of the server
     def startServer(self):
+
+        #   change server indicator to yellow, showing server is listening
         self.statusLabel.config(image=self.icons['ready'])
 
+        #   thread to initiate the server, set ip and port and listen
         serverThread = threading.Thread(target=self.serverObj.connection)
         serverThread.start()
 
         try:
+            #   joins the above thread when process concludes
             if not self.serverObj.serverRunning:
                 serverThread.join()
         except:
             pass
-
+        
+        #   loop that updates ui, whilst server is running
+        #   displays current processes e.g pulling, syncing, requesting
+        #   also displays what files is being synced
         while self.serverObj.serverRunning:
             self.statusLabel.config(image=self.icons[self.serverObj.serverStatus])
             self.progressLabel.config(text=self.serverObj.serverProgress)
@@ -133,11 +169,10 @@ class Instagram():
 
         self.serverRunning = False
 
-    def callback(self):
-        print('callback')
-
 root = customtkinter.CTk()
-#   resize image
+
+#   function to resize icons
+#   loads them and resizes them to a particular fraction or percentage
 def resizeImage(path, image, fraction, W, H):
     sizeW = int((fraction/100) * W)
     sizeH = int((fraction/100) * H)
@@ -146,11 +181,14 @@ def resizeImage(path, image, fraction, W, H):
     img = ImageTk.PhotoImage(resizedImg)
     return img
 
+#   initiate all icons before initating the gui,
+#   because for some reason tkinter wont allow you add more 
+#   images after compilation
 onIcon = resizeImage(path='R:\\Photoshop\\', image=str('on.png'), fraction=8, W=400, H=150)
 readyIcon = resizeImage(path='R:\\Photoshop\\', image=str('ready.png'), fraction=8, W=400, H=150)
 offIcon = resizeImage(path='R:\\Photoshop\\', image=str('off.png'), fraction=8, W=400, H=150)
 
 icons = {'on':onIcon,'ready':readyIcon, 'off':offIcon}
 
-app = Instagram(root, icons)
+app = SyncGui(root, icons)
 root.mainloop()

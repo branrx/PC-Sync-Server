@@ -1,4 +1,6 @@
-def to_list(file):
+#   this takes a file descriptor and returns 
+#   the contents of a txt as a list
+def to_list(file) -> list:
 	counter = 0 
 	temp_list = list()
 	temp_str = ''
@@ -13,10 +15,11 @@ def to_list(file):
 			temp_list.append(temp_str)
 			temp_str = ''
 			counter+=1
-			#print(temp)
+			
 	return temp_list
 
-def to_list_single(file):
+#   returns all contents of txt in a single list
+def to_list_single(file) -> list:
 	temp_list = list()
 	temp_str = ''
 

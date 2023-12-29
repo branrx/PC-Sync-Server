@@ -1,4 +1,4 @@
-#  PC Sync Client
+#  PC Sync Server
 Server sends files to the Android Client.
 
 ## Background

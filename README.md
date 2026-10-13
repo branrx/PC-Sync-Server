@@ -1,15 +1,24 @@
-#  PC Sync Server
-Server sends files to the Android Client.
+# PC Sync Server
+A cross-platform file synchronization server delivering local files to an Android client.
 
-## Background
-I have always been fascinated by how wireless communication works, specifically how one could send information from one device to another without clicking a buttuon (file synchronization). As a student I used multiple devices inorder for both school and personal work. I would have an ipad where I had most of lecture notes, a phone where I'd reply to important messages because I despise of texting on an iPad it feels unpleasantly awkward. Also I had a laptop where I would attend online classs, conferences etc. Problem is whenever I'd download some school study material It was necessary for me to have them on all my devices for convinience sake. It was impractical for me to manually download these files to all my devices or copy from device to device, I am a computer engineer I don't do "tedius". Ergo I decide to learn more about TCP/IP through building an application that utilizes sockets inorder to sync files across all my devices. 
+## Overview & Motivation
+Managing academic and personal workflows across multiple devices (laptops, tablets, and mobile phones) frequently leads to fragmented file storage. Manually transferring lecture slides, readings, and assignment assets between platforms is inefficient and prone to version discrepancies.
 
-## Features
-Can transfer all sorts of files audio, documents, video, images etc.
-Has a graphical user interface.
-Can transfer files seamlessly at the click of a button.
-Fast and reliable file transfer.
-Saves date of last sync, so user knows when last sync occured.
+To address this friction and gain practical experience with low-level networking, this project implements a custom client-server file synchronization tool. Built using TCP/IP socket programming, the application establishes a reliable transmission channel to automate local network file transfers between a primary workstation and target mobile devices.
 
-## Note
-System is limited to a small sized buffer, meaning it can transfer small files mainly because my school documents were small pdf file ergo that was no need for me to use a bigger a transfer buffer. Future work will implement an option for the user to adjust the transfer buffer size based on needs.
+## Key Features
+Universal File Support: Capable of transferring diverse file formats, including documents (PDFs, docs), media (audio, video), and images.
+
+Graphical User Interface (GUI): Clean interface designed for simple connection management and visual transfer status.
+
+One-Click Synchronization: Initiates batch file dispatching instantly across connected endpoints.
+
+Reliable TCP Transmission: Leverages connection-oriented sockets to ensure ordered, error-checked packet delivery.
+
+Sync History Logging: Automatically timestamps successful transfers to maintain an accurate audit log of recent updates.
+
+## Technical Constraints & Roadmap
+Current Buffer Architecture: The initial prototype employs a fixed, lightweight transfer buffer sized for typical academic documents (e.g., standard text and PDF files).
+
+## Future Enhancements: 
+Future releases will introduce dynamic buffer allocation, chunked streaming for large-scale media files, and configurable network throughput settings.
